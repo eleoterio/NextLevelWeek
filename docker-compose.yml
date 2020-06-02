@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+    server:
+        image: node:12.17.0-alpine 
+        container_name: server
+        working_dir: /server
+        volumes: 
+            - ./server:/server
+        ports: 
+            - 3000:3000
+        networks: 
+            - app-networks
+        tty: true
+        entrypoint: ["npm", "run", "dev"]
+        
+    web:
+        image: node:12.17.0-alpine 
+        container_name: web
+        working_dir: /web
+        volumes: 
+            - ./web:/web
+        ports: 
+            - 3001:3000
+        networks: 
+            - app-networks
+        tty: true
+        entrypoint: ["npm", "start"]
+
+networks: 
+    app-networks:
+        driver: bridge
